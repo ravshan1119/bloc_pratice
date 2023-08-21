@@ -11,25 +11,31 @@ class CounterScreen extends StatefulWidget {
 }
 
 class _CounterScreenState extends State<CounterScreen> {
+  TextEditingController oneController = TextEditingController();
+  TextEditingController twoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Counter Screen"),
         ),
-        body: BlocBuilder<CounterCubit,CounterState>(builder: (context, state) {
+        body:
+            BlocBuilder<CounterCubit, CounterState>(builder: (context, state) {
           return Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: oneController,
                   keyboardType: TextInputType.number,
                   onChanged: (v) {
-                    context.read<CounterCubit>().state.copyWith(numOne: num.parse(v));
-                    BlocProvider.of<CounterCubit>(context).calculation();
-
-
-
+                    context
+                        .read<CounterCubit>()
+                        .state
+                        .copyWith(numOne: num.parse(v));
+                    BlocProvider.of<CounterCubit>(context)
+                        .calculation(oneController.text, twoController.text);
                   },
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -40,15 +46,17 @@ class _CounterScreenState extends State<CounterScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: twoController,
                   keyboardType: TextInputType.number,
                   onChanged: (v) {
-
-
-
-                    context.read<CounterCubit>().state.copyWith(numTwo: num.parse(v));
-                    BlocProvider.of<CounterCubit>(context).calculation();
+                    context
+                        .read<CounterCubit>()
+                        .state
+                        .copyWith(numTwo: num.parse(v));
+                    BlocProvider.of<CounterCubit>(context)
+                        .calculation(oneController.text, twoController.text);
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Ender number",
                   ),
@@ -59,7 +67,7 @@ class _CounterScreenState extends State<CounterScreen> {
               ),
               Center(
                 child: Text(
-              context.read<CounterCubit>().state.summa.toString(),
+                  context.read<CounterCubit>().state.summa.toString(),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.normal,

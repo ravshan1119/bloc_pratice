@@ -1,5 +1,6 @@
 import 'package:bloc_pratice/cubits/firebase_auth/signup_cubit.dart';
 import 'package:bloc_pratice/cubits/tab/tab_cubit.dart';
+import 'package:bloc_pratice/ui/auth/signup_screen.dart';
 import 'package:bloc_pratice/ui/tab/tab_box.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class App extends StatelessWidget {
         lazy: true,
       ),
       BlocProvider(
-        create: (_) => SignUpCubit(),
+        create: (_) => LoginCubit(),
         lazy: true,
       )
     ], child: const MyApp());

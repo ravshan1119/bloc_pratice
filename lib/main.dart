@@ -17,7 +17,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  BlocProvider(
-      create: (context)=>CubitView(),
+      create: (context)=>DataCubit(),
         child: const MyApp());
   }
 }

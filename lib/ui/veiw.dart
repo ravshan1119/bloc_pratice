@@ -50,7 +50,7 @@ init();
       ),
       body: BlocConsumer<DataCubit, DataState>(
         builder: (context, state) {
-          return isLoading?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
+          return isLoading?const Center(child: CircularProgressIndicator(),):SingleChildScrollView(
                 child: Column(
                     children: [
                       ...List.generate(

@@ -1,4 +1,3 @@
-
 import 'package:bloc_pratice/cubits/cubit.dart';
 import 'package:bloc_pratice/ui/veiw.dart';
 import 'package:firebase_core/firebase_core.dart';

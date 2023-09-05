@@ -1,57 +1,47 @@
-import 'package:bloc_pratice/cubits/cubit.dart';
-import 'package:bloc_pratice/cubits/view_state.dart';
+import 'package:bloc_pratice/blocs/spacex_bloc/spacex_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-class ViewScreen extends StatefulWidget {
+class ViewScreen extends StatelessWidget {
   const ViewScreen({super.key});
 
   @override
-  State<ViewScreen> createState() => _ViewScreenState();
-}
-
-class _ViewScreenState extends State<ViewScreen> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("nimadur"),
-      ),
-      body: BlocBuilder<CubitView, ViewState>(
+      appBar: AppBar(title: const Text('Spacex Productions')),
+      body: BlocBuilder<SpacexBloc, SpacexState>(
         builder: (context, state) {
-          return Column(
-            children: [
-              SizedBox(
-                height: 50,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    ...List.generate(
-                        10,
-                        (index) => Padding(
-                              padding: const EdgeInsets.all(1),
-                              child: GestureDetector(
-                                onTap: () {
-                                  context.read<CubitView>().change(index);
-                                  print(context.read<CubitView>().list);
-                                },
-                                child: Container(
-                                  height: 40,
-                                  width: 100,
-                                  color: context
-                                          .read<CubitView>()
-                                          .list
-                                          .contains(index)
-                                      ? Colors.grey
-                                      : Colors.blue,
-                                ),
-                              ),
-                            ))
-                  ],
-                ),
-              )
-            ],
-          );
+          if (state is SpacexLoadingState) {
+            return const CircularProgressIndicator();
+          }
+          if (state is SpacexSuccessState) {
+            return ListView.builder(
+              itemCount: state.productions.length,
+              itemBuilder: (context, index) {
+                final production = state.productions[index];
+                print(production);
+                return ListTile(
+                  onTap: () {
+                    //context.read<SingleCountryBloc>().add(SingleCountryFetch(code: country.code));
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return CountryDetailScreen(
+                    //         countryCode: country.code,
+                    //       );
+                    //     },
+                    //   ),
+                    // );
+                  },
+                  leading: Image.network(production.image),
+                  title: Text(production.model),
+                  trailing: Text(production.year_built.toString()),
+                  subtitle: Text(production.id),
+                );
+              },
+            );
+          }
+          return const Text('Oops something went wrong!');
         },
       ),
     );
